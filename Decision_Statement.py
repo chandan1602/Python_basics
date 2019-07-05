@@ -32,8 +32,8 @@ Control statements
 
 example
 ---------------
-a=int(input("Enetr First Number: "))
-b=int(input("Enetr Second Number: "))
+a=int(input("Enter First Number: "))
+b=int(input("Enter Second Number: "))
 
 
 if a>b:
@@ -166,5 +166,24 @@ if vowel=='a' or vowel=='e' or vowel=='i' or vowel=='o' or vowel=='u':
 else:
     print("The character is not a vowel")
 
+#if driver is married and gender is male and age is greater than 28
+#if driver is married and gender is female and age is greater than 25
+#if driver is unmarried and gender is male and age is greater than 32
+
+#driver is insured.
+married=input("Tell whether the driver is MARRIED or UNMARRIED : ")
+gender=input("Tell whether the driver is MALE or a FEMALE : ")
+age=int(input("Tell driver's age : "))
+if married=='MARRIED':
+    if (gender=='MALE' and age>28) or (gender=='FEMALE' and age>25):
+        print("The driver is insured")
+    else:
+        print("The driver is not insured")
+else:
+    if married=='UNMARRIED' and gender=='MALE' and age>32:
+              print("The driver is insured")
+    else:
+        print("The driver is not insured")
+              
 
         
