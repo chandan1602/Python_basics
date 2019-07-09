@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter.messagebox as box
 
+
 mainW=Tk()
 mainW.title("First GUI")
 mainW.geometry("500x500")
@@ -40,7 +41,7 @@ def helloCallBack():
     Age = age
     message = "Hello " + Name.get() + ". Your Age is set to be " + Age.get()
     box.showinfo( "Message 202(Accepted)", message)
-    exit
+
 
 #Label
 l0=Label(mainW, text="Welcome", bg='#B3B3B3', width='62')
@@ -63,8 +64,25 @@ e2=Entry(mainW, textvariable = age)
 e2.place(x=80, y=70)
 
 #Button
-b1=Button(mainW, text="Continue", command=helloCallBack)
+#img = PhotoImage(file = "Yantrix.gif")-----in b1 write image=img
+b1=Button(mainW, text="Continue",bg="light grey",font="110%",width="6", height="1", activeforeground="dark blue",activebackground="#d3d3d3", command=helloCallBack)
 b1.place(x=110, y=100)
+
+#Canvas
+w = Canvas(mainW, width=300, height=60)
+w.place(x=0, y=130)
+canvas_height = 20
+canvas_width = 300
+y = int(canvas_height/2)
+w.create_line(0, y, canvas_width, y)
+
+#Frame
+frame_1 = Frame(mainW)
+frame_1.place(x=0, y=160)
+bottomframe = Frame(mainW)
+bottomframe.place(x=0, y=190, side=BOTTOM)
+redbutton = Button(frame, text = 'Red', fg='red')
+redbutton.place(x=0, y=220, side=LEFT)
 
 mainW.mainloop()
 

@@ -18,7 +18,7 @@ print(msg)
 
 '''
 #LISTS
-------------------------------
+------------------------------------------
 
 bikes = ['trek', 'redline', 'giant']
 first_bike = bikes[0] #get first name in the list
@@ -35,8 +35,25 @@ bikes = []
 bikes.append('Yamaha')
 bikes.append('Hero')
 bikes.append('Honda')
+bikes.insert(2, 'Harley Davidson')
+bikes.insert(3, 'Bullet')
+del bikes[-1]
+bikes.remove('Hero')
 for indian in bikes:
     print(indian)
+
+
+#Popping elements
+recent_bike = bikes.pop()
+print('The popped recent bike is : ', recent_bike)
+
+first_bike = bikes.pop(0)
+print('The popped first bike is : ', first_bike)
+
+
+#List Length
+num_bikes = len(bikes)
+print('We have ' + str(num_bikes) + ' bikes')
 
 #Making numerical list
 squares = []
@@ -60,6 +77,7 @@ copy_of_bikes = bikes[:]
 for indian in copy_of_bikes:
     print(indian)
 '''
+
 
 '''
 #TUPLES(Similar to lists but the items cannot be modified)
@@ -114,12 +132,12 @@ while msg != 'exit':
 
 '''
 #FUNCTIONS
--------------------------------------
+---------------------------------------------
 
 name = input('Enter your Name : ')
 
 def hey(name = 'Chandan'): #Default values for parameters
-    print('Entered name : ', name)
+    print('Entered name :',name)
     if name == 'Chandan':
         return 'Authorised User' #Returning a value 
     else:
@@ -135,7 +153,59 @@ print(message)
 '''
 
 
+'''
 #CLASSES
+------------------------------------
+
+class A:
+    age=90
+    def __init__(self,n):
+        self.name=n
+    def display(self):
+        print("Name is :",self.name)
+        print("Age is :",__class__.age)
+obj=A("anc")
+obj.display()
+
+'''
+
+
+
+'''
+#WORKING WITH FILE
+-----------------------------------
+
+filename = 'FirstFile.txt'
+with open(filename) as file_object:
+    lines = file_object.readlines()
+
+with open(filename, 'w') as file_object1:
+    file_object1.write('I Love Programming!')
+
+with open(filename, 'a') as file_object2:
+    file_object2.write(' Programming is Fun')
+
+for line in lines:
+    print(line)
+'''
+
+
+'''
+#EXCEPTION
+----------------------------------
+
+prompt = 'How many tickets do you need : '
+num_tickets = input(prompt)
+
+try:
+    num_tickets = int(num_tickets)
+except ValueError:
+    print('Please try again!')
+else:
+    print('Your tickets are printing!')
+
+'''
+
 
 
 
