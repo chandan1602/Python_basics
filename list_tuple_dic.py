@@ -187,32 +187,39 @@ for i in range(0, 4, 1):
         
 
 '''
+
+'''
+list_var.sort()
+print(list_var)
+
+list_var.reverse()
+print(list_var)
+'''
+
+
 list_var=[]
 n=int(input("Enter the number of elements "))
 for i in range(0,n,1):
     ele=int(input())
     list_var.append(ele)
 print(list_var)
+list_var.append(-9999999999999999999999999999999999999999)
 
+def opOnListItemFirst():
+    list_var.append(list_var[i+1])
+    del list_var[i+1]
 
-list_var.sort()
-print(list_var)
-
-list_var.reverse()
-print(list_var)
-
-
-'''
+def opOnListItemSecond():
+    list_var.append(list_var[i])
+    del list_var[i]
 print("----------------The sorted loop will be---------------")
 i=0
-while i<=99999:
+while i<n:
     for j in range(0, n-1, 1):
-        if list_var[j] > list_var[j+1]:
-            list_var.append(list_var[j+1])
-            del list_var[j+1] 
-            i+=1
-    else:
-        list_var.append(list_var[i])
-        del list_var[i]
-        i=i
-'''        
+        if list_var[i] > list_var[i+1]:
+            opOnListItemFirst()
+        else:
+            opOnListItemSecond()
+    print(list_var[i])
+    i+=1
+        

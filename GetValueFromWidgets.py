@@ -1,11 +1,19 @@
 from tkinter import *
+import sqlite3
+con=sqlite3.connect("form_db")
+if con:
+    print("Database Connected")
+else:
+    print("Error connecting Database!!")
 
+#con.execute("create table form (name text,age int,gender text,qual text)")
+cur=con.cursor()
+##################################################################3
 
 mainW=Tk()
 mainW.title("First GUI")
 mainW.geometry("500x500")
 mainW.resizable(0,0)
-
 
 ##################################################
 def getValues():
@@ -25,8 +33,34 @@ def getValues():
     if(q2.get()==1):
         qual=qual+' grad '
     #display text on Label: configure()
-    l5.configure(text=name+"\n"+str(c)+"\nGender is "+gender+"\nQual:"+qual)
+    #l5.configure(text=name+"\n"+str(c)+"\nGender is "+gender+"\nQual:"+qual)
 
+    #Inserting values into the databse
+    con.execute("insert into form(name,age) values('%s',%d)"%(e1.get(), int(e2.get())))
+    con.commit()
+    print("Data Inserted!!")
+
+    #Displaying values from database
+    cur.execute("select * from form")
+    print("NAME            AGE")
+    print("-------------------")
+    for values in cur:
+        print(values[0], "      ",values[1])
+ 
+def deleteRecord():
+    nameDel=e5.get()
+    #Database commands
+    con.execute("delete from form where name='%s'"%(nameDel))
+    con.commit()
+    print("Data deleted!!")
+
+    #Displaying values from database
+    cur.execute("select * from form")
+    print("NAME            AGE")
+    print("-------------------")
+    for values in cur:
+        print(values[0], "      ",values[1])    
+    
 
 ####################################################
 
@@ -36,7 +70,7 @@ l1.grid(row=0,column=0)
 e1=Entry(mainW)
 e1.grid(row=0,column=1)
 
-l2=Label(mainW,text="Enter A")
+l2=Label(mainW,text="Enter Age")
 l2.grid(row=1,column=0)
 
 
@@ -73,7 +107,21 @@ c2.grid(row=3,column=2)
 b1=Button(mainW,text="Submit",command=getValues)
 b1.grid(row=4,column=0)
 
+'''
 l5=Label(mainW)
 l5.grid(row=5,column=0)
+'''
+
+#Delete label
+l5=Label(mainW,text="Enter Name")
+l5.grid(row=5,column=0)
+
+e5=Entry(mainW)
+e5.grid(row=5,column=1)
+
+#Button
+b2=Button(mainW, text="Delete Record", command=deleteRecord)
+b2.grid(row=6,column=0)
+
 
 mainW.mainloop()
