@@ -9,6 +9,7 @@ else:
     print("Error connecting Database!!")
 
 #con.execute("create table signup (name text,age int,gender text,qual text, pass text, ConPass text)")
+#con.execute("create table contacts (name text, code text, number int)")
 cur=con.cursor()
 #########################################################################
 
@@ -92,26 +93,23 @@ class Window1:
 
         self.linebreak = Label(self.root)
         self.linebreak.grid(row=3, column=0)
-
-        self.l2 = Button(self.root, text="INSERT",bg="#353535",foreground="#fff",command=self.delData)
+    
+        self.l2 = Button(self.root, text="INSERT",bg="#353535",foreground="#fff",command=self.insertData)
         self.l2.grid(row=4, column=0)
-
+    
         self.l2 = Button(self.root, text="UPDATE",bg="#353535",foreground="#fff",command=self.delData)
         self.l2.grid(row=4, column=1)
-
+     
         
-##################
+#################
     def readData(self):
         t1=Toplevel(mainW)
         r1=readData(t1)
-        
-        
-    def insertData(self):
-        self.root.frame=Frame(self.root,width=200,height=200,bg='grey')
-        self.root.frame.pack()
-        self.l1=Label(self.root.frame,text="enter name")
-        self.l1.pack()
 
+    def insertData(self):
+        t1=Toplevel(mainW)
+        i1=insertData(t1)
+    
     def delData(self):
         self.root.frame=Frame(self.root,width=200,height=200,bg='grey')
         self.root.frame.pack()
@@ -120,8 +118,69 @@ class Window1:
         self.l2=Label(self.root.frame,text="enter name")
         self.l2.pack()
 ###################
+       
 
+################################################################################################
+class insertData:
+    def __init__(self, parent):
+        self.insert=parent
+        self.insert.title("Data Insertion")
+        self.insert.geometry("500x500")
+        self.insert.resizable(0,0)
 
+        self.l0=Label(self.insert, text="INSERT YOUR DATA", bg='#B3B3B3', width='62')
+        self.l0.grid(row=0, column=0, columnspan=3)
+
+        self.linebreak = Label(self.insert)
+        self.linebreak.grid(row=1, column=0)
+
+        self.l1=Label(self.insert,text="Enter Name")
+        self.l1.grid(row=2,column=0)
+        self.e1=Entry(self.insert)
+        self.e1.grid(row=2,column=1, columnspan=2)
+
+        self.l2=Label(self.insert,text="Enter Country Code")
+        self.l2.grid(row=3,column=0)
+        self.e2=Entry(self.insert)
+        self.e2.grid(row=3,column=1, columnspan=2)
+
+        self.l3=Label(self.insert,text="Enter Contact Number")
+        self.l3.grid(row=4,column=0)
+        self.e3=Entry(self.insert)
+        self.e3.grid(row=4,column=1, columnspan=2)
+
+        self.b1 = Button(self.insert, text="INSERT",bg="#353535",foreground="#fff",command=self.saveData)
+        self.b1.grid(row=5, column=0)
+
+###################
+    def saveData(self):
+        #fetching values
+        name = self.e1.get()
+        code = self.e2.get()
+        number = self.e3.get()
+
+        if name=='' or code=='' or number=='':
+            box.showinfo("ALERT", "All the fields are mandatory!!")#all fields condition
+        if len(number)!=10 and number!='':
+            box.showinfo("ALERT", "Contact Number doesn't have 10 numbers!!")#wrong contact number
+
+        if name!='' and code!='' and number!='' and len(number)==10:
+            con.execute("insert into contacts values('%s','%s',%d)"%(name, code, int(number)))
+            con.commit()
+            print("Data Inserted!!")                
+
+            #Displaying values from database
+            cur.execute("select * from contacts")
+            print("NAME             COUNTRY-CODE           CONTACT-NUMBER")
+            print("-----------------------------------------------------------------")
+            for values in cur:
+                print(values[0], "            ",values[1], "        ", values[2])
+
+            box.showinfo("ALL SET", "Data insertion Successful!!")#successful insertion
+            self.insert.destroy()
+
+###################
+        
 ################################################################################################
 class readData:
     def __init__(self, parent):
@@ -242,7 +301,7 @@ class Window2:
         if password!=confirmedPass and password!='' and confirmedPass!='':#password not matching
             box.showinfo("Alert", "Password and Confirm-Password does not match")
 
-        #CALLBACKS0
+        #CALLBACKS
         if password==confirmedPass and name!='' and age!='' and gender!='' and password!='' and confirmedPass!='':
             #inserting data into the database
             con.execute("insert into signup values('%s',%d,'%s','%s','%s','%s')"%(name, int(age), gender, qual, password, confirmedPass))
@@ -263,6 +322,8 @@ class Window2:
 
         if name=='' or age=='' or gender=='' or password=='' or confirmedPass=='':
             box.showinfo("Alert", "All sections are Required")#any field is empty
+
+        
 #############################################################
         
 
