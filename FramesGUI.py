@@ -255,7 +255,58 @@ class updateData:
 
         self.linebreak = Label(self.update)
         self.linebreak.grid(row=1, column=0)
+
+        self.l1=Label(self.update,text="Enter Name")
+        self.l1.grid(row=2,column=0)
+        self.e1=Entry(self.update)
+        self.e1.grid(row=2,column=1, columnspan=2)
+
+        self.l2=Label(self.update,text="Enter Country Code")
+        self.l2.grid(row=3,column=0)
+        self.e2=Entry(self.update)
+        self.e2.grid(row=3,column=1, columnspan=2)
+
+        self.l3=Label(self.update,text="Enter Contact Number")
+        self.l3.grid(row=4,column=0)
+        self.e3=Entry(self.update)
+        self.e3.grid(row=4,column=1, columnspan=2)
+
+        self.b1 = Button(self.update, text="UPDATE",bg="#353535",foreground="#fff",command=self.saveData)
+        self.b1.grid(row=5, column=0)
+
+    
 ################################################################################################
+    def saveData(self):
+        #fetching values
+        name = self.e1.get()
+        code = self.e2.get()
+        number = self.e3.get()
+
+        #database
+        if name=='' or code=='' or number=='':
+            box.showinfo("ALERT", "All the fields are Mandatory!!")
+        cur.execute("select exists(select * from contacts where name=?)", (name,))
+        for values in cur:
+            if values[0]==0 and name!='' and code!='' and number!='':
+                box.showinfo("ALERT", "The entered name does not exist in the database")
+            if values[0]==1 and name!='' and code!='' and number!='':
+                con.execute("update contacts set code=? where name=?", (code, name, ))
+                con.commit()
+                con.execute("update contacts set number=? where name=?", (number, name, ))               
+                con.commit()
+                box.showinfo("All Done", "Contact Updated Successfully!!")
+                self.update.destroy()
+                #Displaying values from database
+                cur.execute("select * from contacts")
+                print("NAME             COUNTRY-CODE           CONTACT-NUMBER")
+                print("-----------------------------------------------------------------")
+                for values in cur:
+                    print(values[0], "            ",values[1], "        ", values[2])
+
+                
+###################
+   
+###################
     
 ################################################################################################
 class readData:
