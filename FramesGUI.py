@@ -97,7 +97,7 @@ class Window1:
         self.l2 = Button(self.root, text="INSERT",bg="#353535",foreground="#fff",command=self.insertData)
         self.l2.grid(row=4, column=0)
     
-        self.l2 = Button(self.root, text="UPDATE",bg="#353535",foreground="#fff",command=self.delData)
+        self.l2 = Button(self.root, text="UPDATE",bg="#353535",foreground="#fff",command=self.updateData)
         self.l2.grid(row=4, column=1)
      
         
@@ -111,12 +111,20 @@ class Window1:
         i1=insertData(t1)
     
     def delData(self):
+        t1=Toplevel(mainW)
+        d1=delData(t1)
+        '''
         self.root.frame=Frame(self.root,width=200,height=200,bg='grey')
         self.root.frame.pack()
         self.l1=Label(self.root.frame,text="enter id")
         self.l1.pack()
         self.l2=Label(self.root.frame,text="enter name")
         self.l2.pack()
+        '''
+
+    def updateData(self):
+        t1=Toplevel(mainW)
+        u1=updateData(t1)        
 ###################
        
 
@@ -180,7 +188,75 @@ class insertData:
             self.insert.destroy()
 
 ###################
+
+################################################################################################
+
+class delData:
+    def __init__(self, parent):
+        self.delete=parent
+        self.delete.title("Here is your data!")
+        self.delete.geometry("500x500")
+        self.delete.resizable(0,0)
+
+        self.l0=Label(self.delete, text="DELETE YOUR DATA", bg='#B3B3B3', width='62')
+        self.l0.grid(row=0, column=0, columnspan=3)
+
+        self.linebreak = Label(self.delete)
+        self.linebreak.grid(row=1, column=0)
+
+        self.l1=Label(self.delete,text="Enter Name")
+        self.l1.grid(row=2,column=0)
+        self.e1=Entry(self.delete)
+        self.e1.grid(row=2,column=1, columnspan=2)
+
+        self.linebreak = Label(self.delete)
+        self.linebreak.grid(row=3, column=0)
+
+        self.b1 = Button(self.delete, text="DELETE",bg="#353535",foreground="#fff",command=self.deleteData)
+        self.b1.grid(row=4, column=0, columnspan=2)      
+###################
         
+    def deleteData(self):
+        #fetching values
+        name=self.e1.get()
+
+        #database
+        if name=='':
+            box.showinfo("ALERT", "All the fields are required!!")
+        cur.execute("select exists(select * from contacts where name=?)",(name,))
+        for values in cur:
+            if values[0]==0 and name!='':
+                box.showinfo("ALERT", "MATCHING NAME NOT FOUND IN THE DATABASE!!")
+            if values[0]==1:
+                con.execute("delete from contacts where name='%s'"%(name))
+                con.commit()
+                box.showinfo("ALL DONE!", "The Contact has been deleted successfully!!")
+                self.delete.destroy()
+                #Displaying values from database
+                cur.execute("select * from contacts")
+                print("NAME             COUNTRY-CODE           CONTACT-NUMBER")
+                print("-----------------------------------------------------------------")
+                for values in cur:
+                    print(values[0], "            ",values[1], "        ", values[2])
+
+
+###################
+
+################################################################################################
+class updateData:
+    def __init__(self, parent):
+        self.update=parent
+        self.update.title("Here is your data!")
+        self.update.geometry("500x500")
+        self.update.resizable(0,0)
+
+        self.l0=Label(self.update, text="UPDATE YOUR DATA", bg='#B3B3B3', width='62')
+        self.l0.grid(row=0, column=0, columnspan=3)
+
+        self.linebreak = Label(self.update)
+        self.linebreak.grid(row=1, column=0)
+################################################################################################
+    
 ################################################################################################
 class readData:
     def __init__(self, parent):
@@ -278,7 +354,7 @@ class Window2:
         self.b1.grid(row=9,column=0, columnspan=3)
 
       
-#############################################################
+###################
     def getValues(self):     
         #get Data from Entry
         name=self.e1.get()
@@ -324,7 +400,7 @@ class Window2:
             box.showinfo("Alert", "All sections are Required")#any field is empty
 
         
-#############################################################
+###################
         
 
 
