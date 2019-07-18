@@ -276,6 +276,9 @@ class updateData:
 
     
 ################################################################################################
+
+###################
+        
     def saveData(self):
         #fetching values
         name = self.e1.get()
@@ -305,8 +308,7 @@ class updateData:
 
                 
 ###################
-   
-###################
+
     
 ################################################################################################
 class readData:
@@ -321,17 +323,36 @@ class readData:
 
         self.linebreak = Label(self.read)
         self.linebreak.grid(row=1, column=0)
-        
-        self.data=Label(self.read)
-        self.data.grid(row=2, column=0)
 
+        self.labelHeadingName=Label(self.read, text="NAME", bg='#000', foreground='#fff')
+        self.labelHeadingName.grid(row=2, column=0)
+
+        self.labelHeadingNumber=Label(self.read, text="CONTACT-NUMBER", bg='#000', foreground='#fff')
+        self.labelHeadingNumber.grid(row=2, column=1)
+
+        self.linebreak = Label(self.read)
+        self.linebreak.grid(row=3, column=0)
+
+        self.labelDataName=Label(self.read, text="")
+        self.labelDataName.grid(row=4, column=0)
+
+        self.labelDataNumber=Label(self.read, text="")
+        self.labelDataNumber.grid(row=4, column=1)       
+        
+ 
         #Displaying values from database
-        cur.execute("select * from signup")
-        #self.data.configure(text="NAME                        AGE           GENDER         QUALIFICATION       PASSWORD")
-        #self.data.configure(text="-------------------------------------------------------------------------------------")
-        for values in cur:
-            net=values[0]+ "      "+str(values[1])+ "      "+ values[2]+ "      "+ values[3]+ "      "+ values[4]
-            self.data.configure(text=net)
+        cursor=con.execute("select * from contacts")
+        allnames=""
+        allnumbers=""
+        for values in cursor:
+            name=values[0]
+            number=values[1] + str(values[2])
+            allnames=allnames+name+"\n"
+            allnumbers=allnumbers+number+"\n"
+        con.commit()
+        con.close()
+        self.labelDataName.configure(text=allnames)
+        self.labelDataNumber.configure(text=allnumbers)
 
 
         
