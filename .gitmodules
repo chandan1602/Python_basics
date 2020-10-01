@@ -1,0 +1,3 @@
+[submodule "ignored/face recognition/dlib"]
+	path = ignored/face recognition/dlib
+	url = https://github.com/davisking/dlib.git
