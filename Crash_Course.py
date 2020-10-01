@@ -83,6 +83,7 @@ for indian in copy_of_bikes:
 #TUPLES(Similar to lists but the items cannot be modified)
 ----------------------------------
 
+
 dimensions = (1920, 1980, 2040)
 for years in dimensions:
     print(years)
@@ -91,7 +92,7 @@ for years in dimensions:
 
 '''
 #DICTIONARIES(Store connections between pieces of information. Each item in a dictionary is a key-value-pair)
------------------------------------------------
+#-----------------------------------------------
 
 alien = {'color' : 'green', 'points' : '5'}
 
@@ -117,11 +118,15 @@ fav_numbers = {'first' : 7, 'second' : 1}
 for values in fav_numbers.values():
     print('The number ' + str(values) + ' is an exception')
 
+
+
 '''
 
 '''
 #WHILE LOOP: special case :: letting a user when to exit the loop
--------------------------------------
+#-------------------------------------
+
+
 
 msg = ' '
 while msg != 'exit':
@@ -132,14 +137,14 @@ while msg != 'exit':
 
 '''
 #FUNCTIONS
----------------------------------------------
+#---------------------------------------------
 
 name = input('Enter your Name : ')
 
 def hey(name = 'Chandan'): #Default values for parameters
     print('Entered name :',name)
     if name == 'Chandan':
-        return 'Authorised User' #Returning a value 
+        return 'Authorised User ' #Returning a value 
     else:
         return 'Warning!! Unauthorised User'
 message = hey()
@@ -155,7 +160,8 @@ print(message)
 
 '''
 #CLASSES
-------------------------------------
+#------------------------------------
+
 
 class A:
     age=90
@@ -166,14 +172,14 @@ class A:
         print("Age is :",__class__.age)
 obj=A("anc")
 obj.display()
-
 '''
+
 
 
 
 '''
 #WORKING WITH FILE
------------------------------------
+#-----------------------------------
 
 filename = 'FirstFile.txt'
 with open(filename) as file_object:
@@ -206,7 +212,24 @@ else:
 
 '''
 
-
+import numpy
+from functools import reduce
+n = int(input())
+val = []
+for i in range(0,n,1):
+    plucks = int(input())
+    # for i in range(0,plucks,1):
+    #     net.append(int(input()))
+    net = list(map(int, input().split()))
+    arr=net[:]
+    arr.pop()
+    net.pop(0)
+    net = numpy.subtract(net,arr)
+    net = numpy.subtract(net,1)
+    val.append(reduce((lambda x,y:x+y), net))
+    
+for total in val:
+    print(total)
 
 
 

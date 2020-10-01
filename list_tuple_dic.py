@@ -196,7 +196,7 @@ list_var.reverse()
 print(list_var)
 '''
 
-
+'''
 list_var=[]
 n=int(input("Enter the number of elements "))
 for i in range(0,n,1):
@@ -222,4 +222,4 @@ while i<n:
             opOnListItemSecond()
     print(list_var[i])
     i+=1
-        
+'''        

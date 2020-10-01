@@ -1,25 +1,33 @@
 from modules import *
 
-img_bill = face_recognition.load_image_file('./img/known/bill-gates.jpg')
-bill_face_encoding = face_recognition.face_encodings(img_bill)[0]
+# img_bill = face_recognition.load_image_file('./img/known/bill-gates.jpg')
+# bill_face_encoding = face_recognition.face_encodings(img_bill)[0]
 
-img_jobs = face_recognition.load_image_file('./img/known/steve -jobs.jpg')
-jobs_face_encoding = face_recognition.face_encodings(img_jobs)[0]
+# img_mark = face_recognition.load_image_file('./img/known/mark-zuckerberg.jpg')
+# mark_face_encoding = face_recognition.face_encodings(img_mark)[0]
+
+# img_elon = face_recognition.load_image_file('./img/known/elon-musk.jpg')
+# elon_face_encoding = face_recognition.face_encodings(img_elon)[0]
+
+img_sunil = face_recognition.load_image_file('./img/known/sunil-grover.jpeg')
+sunil_face_encoding = face_recognition.face_encodings(img_sunil)[0]
+
 #print('JOBS FACE ENCODINGS : ', jobs_face_encoding)
 #Create an array of encodings and names
 
 known_face_encodings = [
-    bill_face_encoding,
-    jobs_face_encoding
+    # bill_face_encoding,
+    # mark_face_encoding,
+    # elon_face_encoding,
+    sunil_face_encoding
 ]
 
 known_face_names = [
-    "Bill Gates",
-    "Steve Jobs"
+    "Sunil Grover"
 ]
 
 #Load test image to find faces in
-test_image = face_recognition.load_image_file('./img/unknown/unknown3.jpg')
+test_image = face_recognition.load_image_file('./img/unknown/unknown8.jpeg')
 
 #Find faces in test image
 face_locations = face_recognition.face_locations(test_image)
@@ -33,16 +41,17 @@ pil_image = Image.fromarray(test_image)
 #Create a image draw instance
 draw = ImageDraw.Draw(pil_image)
 
+
 #Loop through faces in test image
 for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
-    matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+    matches = face_recognition.compare_faces(known_face_encodings, face_encoding, tolerance=0.70)
 
-    name = "Unknown person"
+    name = "Unknown person".upper()
 
     #If match
     if True in matches:
         first_match_index = matches.index(True)
-        name = known_face_names[first_match_index]
+        name = known_face_names[first_match_index].upper()
 
     #Draw box
     draw.rectangle(((left, top), (right, bottom)), outline=(0,0,0))
