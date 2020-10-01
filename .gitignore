@@ -17,4 +17,4 @@ url shortner
 ./'voice assistant'/dlib/docs/docs/python/classes.txt
 ./'voice assistant'/dlib/docs/docs/python/functions.txt
 
-./ignored
+./ignored/*
